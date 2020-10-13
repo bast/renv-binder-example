@@ -1,0 +1,49 @@
+---
+title: "An example"
+author: "Radovan Bast"
+date: 2020-10-13
+---
+
+```{r load_packages, include=FALSE}
+library(readr)
+library(ggplot2)
+```
+
+```{r load_data, include=FALSE}
+data <- read_csv("gapminder.csv")
+```
+
+```{r set_theme}
+theme_set(theme_bw())
+```
+
+```{r simple_plot}
+p <- ggplot(data = data, mapping = aes(x = gdpPercap, y = lifeExp))
+p + geom_point()
+```
+
+```{r log_plot}
+p <- ggplot(data = data, mapping = aes(x = gdpPercap, y = lifeExp))
+p + geom_point(alpha=0.5) + scale_x_log10() +
+	xlab("GDP per capita (Int$)") + ylab("Life expectancy (years)")
+```
+
+```{r plot_with_colors}
+p <- ggplot(data = data, mapping = aes(x = gdpPercap, y = lifeExp,
+    color = continent, fill = continent))
+p + geom_point(alpha=0.5) + scale_x_log10() +
+	xlab("GDP per capita (Int$)") + ylab("Life expectancy (years)")
+```
+
+Figure 3.15 from https://socviz.co/makeplot.html
+```{r plot_smoothing}
+p <- ggplot(data = data, mapping = aes(x = gdpPercap, y = lifeExp,
+    color = continent, fill = continent))
+p + geom_point(alpha=0.5) + scale_x_log10() +
+	xlab("GDP per capita (Int$)") + ylab("Life expectancy (years)") +
+	geom_smooth(method = "loess")
+```
+
+```{r saving_plot, include=FALSE}
+ggsave("myplot.png")
+```
